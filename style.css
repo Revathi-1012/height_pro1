@@ -1,22 +1,47 @@
 body{
-font-family: Arial;
+
 text-align:center;
+font-family:Arial;
 background:#111;
 color:white;
-padding:40px;
+
+}
+
+.camera-container{
+
+position:relative;
+display:inline-block;
+
+}
+
+video{
+
+width:90%;
+max-width:500px;
+
+}
+
+canvas{
+
+position:absolute;
+top:0;
+left:0;
+
 }
 
 input{
+
 padding:10px;
-font-size:18px;
-width:200px;
+font-size:16px;
+
 }
 
 button{
-padding:12px 25px;
-font-size:18px;
-background:#00c3ff;
+
+padding:10px 20px;
+font-size:16px;
+background:#00aaff;
 border:none;
 color:white;
-cursor:pointer;
+
 }
