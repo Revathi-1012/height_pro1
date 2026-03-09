@@ -1,23 +1,72 @@
-let angle = 0;
+const video = document.getElementById("video");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
 
-window.addEventListener("deviceorientation", function(event){
+let refPixels = 0;
+let objPixels = 0;
 
-angle = 90 - event.beta;
+async function startCamera(){
 
-document.getElementById("angle").innerText =
-"Angle: " + angle.toFixed(2) + "°";
+const stream = await navigator.mediaDevices.getUserMedia({video:true});
+
+video.srcObject = stream;
+
+}
+
+async function loadModel(){
+
+const model = await cocoSsd.load();
+
+video.onloadeddata = () => {
+
+canvas.width = video.videoWidth;
+canvas.height = video.videoHeight;
+
+setInterval(async ()=>{
+
+const predictions = await model.detect(video);
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+predictions.forEach(p=>{
+
+const [x,y,width,height] = p.bbox;
+
+ctx.strokeStyle="red";
+ctx.strokeRect(x,y,width,height);
+
+ctx.fillText(p.class,x,y);
+
+if(p.class==="bottle"){
+
+refPixels = height;
+
+}
+
+if(p.class==="person"){
+
+objPixels = height;
+
+}
 
 });
 
-function startMeasure(){
+},200);
 
-let distance =
-document.getElementById("distance").value;
-
-let height =
-distance * Math.tan(angle * Math.PI / 180);
-
-document.getElementById("result").innerText =
-"Height: " + height.toFixed(2) + " meters";
+};
 
 }
+
+function calculateHeight(){
+
+let refHeight = document.getElementById("refHeight").value;
+
+let realHeight = (objPixels/refPixels) * refHeight;
+
+document.getElementById("result").innerText =
+"Estimated Height: "+realHeight.toFixed(2)+" cm";
+
+}
+
+startCamera();
+loadModel();
