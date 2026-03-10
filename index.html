@@ -3,37 +3,39 @@
 
 <head>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Height Measurement Pro</title>
 
-<title>AI Height Measurement</title>
-
-<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+
+<link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-<h2>AI Object Height Measurement</h2>
+<h2>AI Height Measurement Pro</h2>
 
 <video id="video" autoplay playsinline></video>
-
 <canvas id="canvas"></canvas>
 
 <br>
 
-<input id="distance" type="number" placeholder="Enter distance (meters)">
+<input id="distance" placeholder="Distance from object (meters)">
 
-<br><br>
+<br>
 
-<button onclick="detect()">Detect Object</button>
+<button onclick="startCamera()">Start Camera</button>
+<button onclick="detectAndMeasure()">Measure Height</button>
 
-<h2 id="result"></h2>
+<h3 id="result">Height: --</h3>
 
-<script src="script.js"></script>
+<script src="math.js"></script>
+<script src="camera.js"></script>
+<script src="ai.js"></script>
+<script src="app.js"></script>
 
 </body>
 
