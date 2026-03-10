@@ -5,29 +5,33 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Object Height Measurement</title>
+<title>AI Height Measurement</title>
 
 <link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
 
 </head>
 
 <body>
 
-<h1>Object Height Measurement</h1>
+<h2>AI Object Height Measurement</h2>
 
 <video id="video" autoplay playsinline></video>
 
-<br><br>
+<canvas id="canvas"></canvas>
+
+<br>
 
 <input id="distance" type="number" placeholder="Enter distance (meters)">
 
 <br><br>
 
-<button onclick="measureHeight()">Measure Height</button>
+<button onclick="detect()">Detect Object</button>
 
-<h3 id="angle">Angle: 0</h3>
-
-<h2 id="result">Height: --</h2>
+<h2 id="result"></h2>
 
 <script src="script.js"></script>
 
