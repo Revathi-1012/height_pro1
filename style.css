@@ -1,7 +1,7 @@
 body{
 
 text-align:center;
-background:black;
+background:#111;
 color:white;
 font-family:Arial;
 
@@ -11,14 +11,21 @@ video{
 
 width:90%;
 max-width:500px;
-border:3px solid white;
+
+}
+
+canvas{
+
+position:absolute;
+left:0;
+top:100px;
 
 }
 
 input{
 
 padding:10px;
-font-size:16px;
+font-size:18px;
 
 }
 
@@ -26,9 +33,8 @@ button{
 
 padding:12px;
 font-size:18px;
-background:#00aaff;
+background:#00bcd4;
 color:white;
 border:none;
 
 }
-
