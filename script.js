@@ -1,65 +1,58 @@
-const video = document.getElementById("video");
+const video = document.getElementById("video")
+const canvas = document.getElementById("canvas")
+const ctx = canvas.getContext("2d")
 
-let angle = 0;
+let model
 
-// Back camera open
-navigator.mediaDevices.getUserMedia({
+async function setupCamera(){
+
+const stream = await navigator.mediaDevices.getUserMedia({
 
 video:{
-
-facingMode:{ exact:"environment" }
-
+facingMode:"environment"
 }
 
 })
 
-.then(stream=>{
-
-video.srcObject = stream;
-
-})
-
-.catch(()=>{
-
-// fallback
-
-navigator.mediaDevices.getUserMedia({video:true})
-
-.then(stream=>{
-
-video.srcObject = stream;
-
-})
-
-})
-
-
-// angle sensor
-
-window.addEventListener("deviceorientation",(event)=>{
-
-angle = Math.abs(event.beta);
-
-document.getElementById("angle").innerText =
-"Angle: "+angle.toFixed(2);
-
-});
-
-function measureHeight(){
-
-let distance = document.getElementById("distance").value;
-
-if(!distance){
-
-alert("Enter distance first");
-
-return;
+video.srcObject = stream
 
 }
 
-let height = distance * Math.tan(angle*Math.PI/180);
+async function loadModel(){
+
+model = await cocoSsd.load()
+
+}
+
+async function detect(){
+
+const predictions = await model.detect(video)
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+predictions.forEach(pred=>{
+
+const [x,y,width,height] = pred.bbox
+
+ctx.strokeStyle="red"
+
+ctx.strokeRect(x,y,width,height)
+
+let distance = document.getElementById("distance").value
+
+if(distance){
+
+let realHeight = (height/500)*distance*2
 
 document.getElementById("result").innerText =
-"Height: "+height.toFixed(2)+" meters";
+"Estimated Height: "+realHeight.toFixed(2)+" meters"
 
 }
+
+})
+
+}
+
+setupCamera()
+
+loadModel()
